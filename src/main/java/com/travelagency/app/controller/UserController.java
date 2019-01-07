@@ -1,6 +1,8 @@
 package com.travelagency.app.controller;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -14,19 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.travelagency.app.dao.BaseDao;
+import com.travelagency.app.dao.hibernatedao.RouteHibernateDao;
+import com.travelagency.app.entity.RouteEntity;
 
 @Controller
 public class UserController {
 
 	
-//	@RequestMapping(value="/page", method = RequestMethod.GET)
-//	public ModelAndView getPage(){
-//		System.out.println("111111111111111111111111111111");
-//		ModelAndView view =new ModelAndView("home");
-//		return view;
-//	}
-	
-	@RequestMapping(value="/page", method = RequestMethod.GET)
+	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
 		Date date = new Date();
@@ -36,8 +34,73 @@ public class UserController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "menu";
 	}
+	
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "create_contract", method = RequestMethod.POST)
+    public String createContract(){
+    	System.out.println("create");
+        return "menu";
+    }
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "my_clients", method = RequestMethod.POST)
+    public String myClients(){
+    	System.out.println("myClients");
+        return "menu";
+    }
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "sum_of_contracts", method = RequestMethod.POST)
+    public String sumOfContracts(){
+    	System.out.println("sumOfContracts");
+        return "menu";
+    }
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "my_contracts_on_period", method = RequestMethod.POST)
+    public String myContractsOnPeriod(){
+    	System.out.println("myContractsOnPeriod");
+        return "menu";
+    }
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "all_routes", method = RequestMethod.POST)
+    public String allRoutes(Model model){
+		BaseDao<RouteEntity> routeDao = new RouteHibernateDao();
+		System.out.println(routeDao);
+		String[] cols = new String[] {"id", "country", "route"};
+		List<RouteEntity> list = routeDao.getAll();
+		System.out.println(list);
+		System.out.println(list.size());
+
+		model.addAttribute("routes", routeDao.getAll());
+		model.addAttribute("columns", new ArrayList<String>(Arrays.asList(cols)));
+    	System.out.println("allRoutes");
+        return "routes";
+    }
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "all_contracts", method = RequestMethod.POST)
+    public String allContracts(){
+    	System.out.println("allContracts");
+        return "menu";
+    }
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "statistics_of_agents", method = RequestMethod.POST)
+    public String statisticsOfAgents(){
+    	System.out.println("statisticsOfAgents");
+        return "menu";
+    }
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "all_agents", method = RequestMethod.POST)
+    public String allAgents(){
+    	System.out.println("allAgents");
+        return "menu";
+    }
+	
+	@RequestMapping(value = {"/", "/menu"}, params = "log_out", method = RequestMethod.POST)
+    public String logOut(){
+    	System.out.println("logOut");
+        return "menu";
+    }
+	
 	
 //    @Autowired
 //    private UserService userService;
