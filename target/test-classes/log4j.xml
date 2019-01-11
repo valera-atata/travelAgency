@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.travelagency.app">
+	<logger name="com.example.app">
 		<level value="info" />
 	</logger>
 	

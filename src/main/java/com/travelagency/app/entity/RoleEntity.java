@@ -1,24 +1,25 @@
 package com.travelagency.app.entity;
 
 import javax.persistence.*;
-
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "roles")
 public class RoleEntity {
-	private Long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "name")
     private String name;
 
-    private Set<AgentEntity> agents = new HashSet<AgentEntity>();
+    @ManyToMany(mappedBy = "roleEntities")
+    private Set<AgentEntity> users;
 
     public RoleEntity() {
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id", nullable = false, insertable = true, updatable = true)
     public Long getId() {
         return id;
     }
@@ -27,8 +28,6 @@ public class RoleEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, insertable = true, updatable = true)
     public String getName() {
         return name;
     }
@@ -37,15 +36,20 @@ public class RoleEntity {
         this.name = name;
     }
 
-    @ManyToMany
-    @JoinTable(name = "agent_roles", joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "agent_id"))
-    public Set<AgentEntity> getAgents() {
-        return agents;
+    public Set<AgentEntity> getUsers() {
+        return users;
     }
 
-    public void setAgents(Set<AgentEntity> agents) {
-        this.agents = agents;
+    public void setUsers(Set<AgentEntity> users) {
+        this.users = users;
     }
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                '}';
+    }
 }

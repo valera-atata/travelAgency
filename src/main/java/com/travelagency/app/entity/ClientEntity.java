@@ -6,22 +6,35 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "clients", schema = "", catalog = "relationship")
 @Table(name = "clients")
 public class ClientEntity {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "client_id")
     private Long clientId;
+	
+	@Column(name = "surname", nullable = false, insertable = true, updatable = true, length = 200)
     private String surname;
+	
+	@Column(name = "name", nullable = false, insertable = true, updatable = true, length = 200)
     private String name;
+	
+	@Column(name = "patron", nullable = false, insertable = true, updatable = true, length = 200)
     private String patron;
+	
+	@Column(name = "passport", nullable = false, insertable = true, updatable = true, length = 200)
     private String passport;
+	
+	@Column(name = "address", nullable = false, insertable = true, updatable = true, length = 200)
     private String address;
+	
+	@Column(name = "phone", nullable = true, insertable = true, updatable = true)
     private Long phone;
 
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ContractEntity> contracts = new HashSet<ContractEntity>();
   
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "client_id", nullable = false, insertable = true, updatable = true)
     public Long getClientId() {
 		return clientId;
 	}
@@ -30,8 +43,6 @@ public class ClientEntity {
 		this.clientId = clientId;
 	}
 
-	@Basic
-    @Column(name = "surname", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getSurname() {
 		return surname;
 	}
@@ -40,8 +51,6 @@ public class ClientEntity {
 		this.surname = surname;
 	}
 
-	@Basic
-    @Column(name = "name", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getName() {
 		return name;
 	}
@@ -50,8 +59,6 @@ public class ClientEntity {
 		this.name = name;
 	}
 
-	@Basic
-    @Column(name = "patron", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getPatron() {
 		return patron;
 	}
@@ -60,8 +67,6 @@ public class ClientEntity {
 		this.patron = patron;
 	}
 
-	@Basic
-    @Column(name = "passport", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getPassport() {
 		return passport;
 	}
@@ -70,8 +75,6 @@ public class ClientEntity {
 		this.passport = passport;
 	}
 
-	@Basic
-    @Column(name = "address", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getAddress() {
 		return address;
 	}
@@ -80,8 +83,6 @@ public class ClientEntity {
 		this.address = address;
 	}
 
-	@Basic
-    @Column(name = "phone", nullable = true, insertable = true, updatable = true)
 	public Long getPhone() {
 		return phone;
 	}
@@ -90,7 +91,6 @@ public class ClientEntity {
 		this.phone = phone;
 	}
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<ContractEntity> getContracts() {
         return this.contracts;
     }

@@ -7,25 +7,49 @@ import javax.persistence.*;
 
 
 @Entity
-//@Table(name = "agents", schema = "", catalog = "relationship")
 @Table(name = "agents")
 public class AgentEntity {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "agent_id")
     private Long agentId;
+	
+	@Column(name = "surname", nullable = true, insertable = true, updatable = true, length = 200)
     private String surname;
+	
+	@Column(name = "name", nullable = true, insertable = true, updatable = true, length = 200)
     private String name;
+	
+	@Column(name = "patron", nullable = true, insertable = true, updatable = true, length = 200)
     private String patron;
+	
+	@Column(name = "passport", nullable = true, insertable = true, updatable = true, length = 200)
     private String passport;
+	
+	@Column(name = "address", nullable = true, insertable = true, updatable = true, length = 200)
     private String address;
+	
+	@Column(name = "phone", nullable = true, insertable = true, updatable = true)
     private Long phone;
+	
+	@Column(name = "login", nullable = false, insertable = true, updatable = true, length = 200)
     private String login;
+	
+	@Column(name = "password", nullable = false, insertable = true, updatable = true, length = 200)
     private String password;
   
+	@Transient
+    private String confirmPassword;
+	
+	@OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ContractEntity> contracts = new HashSet<ContractEntity>();
-    private Set<RoleEntity> roles = new HashSet<RoleEntity>();
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "agent_id", nullable = false, insertable = true, updatable = true)
+	
+	@ManyToMany
+    @JoinTable(name = "agent_roles", joinColumns = @JoinColumn(name = "agent_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roleEntities = new HashSet<RoleEntity>();
+
     public Long getAgentId() {
 		return agentId;
 	}
@@ -34,8 +58,6 @@ public class AgentEntity {
 		this.agentId = agentId;
 	}
 
-	@Basic
-    @Column(name = "surname", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getSurname() {
 		return surname;
 	}
@@ -44,8 +66,6 @@ public class AgentEntity {
 		this.surname = surname;
 	}
 
-	@Basic
-    @Column(name = "name", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getName() {
 		return name;
 	}
@@ -54,8 +74,6 @@ public class AgentEntity {
 		this.name = name;
 	}
 
-	@Basic
-    @Column(name = "patron", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getPatron() {
 		return patron;
 	}
@@ -64,8 +82,6 @@ public class AgentEntity {
 		this.patron = patron;
 	}
 
-	@Basic
-    @Column(name = "passport", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getPassport() {
 		return passport;
 	}
@@ -74,8 +90,6 @@ public class AgentEntity {
 		this.passport = passport;
 	}
 
-	@Basic
-    @Column(name = "address", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getAddress() {
 		return address;
 	}
@@ -84,8 +98,6 @@ public class AgentEntity {
 		this.address = address;
 	}
 
-	@Basic
-    @Column(name = "phone", nullable = true, insertable = true, updatable = true)
 	public Long getPhone() {
 		return phone;
 	}
@@ -94,8 +106,6 @@ public class AgentEntity {
 		this.phone = phone;
 	}
 
-	@Basic
-    @Column(name = "login", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getLogin() {
 		return login;
 	}
@@ -104,8 +114,6 @@ public class AgentEntity {
 		this.login = login;
 	}
 
-	@Basic
-    @Column(name = "password", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getPassword() {
 		return password;
 	}
@@ -114,8 +122,15 @@ public class AgentEntity {
 		this.password = password;
 	}
 	
-	@OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<ContractEntity> getContracts() {
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+	
+ 	public Set<ContractEntity> getContracts() {
         return this.contracts;
     }
 
@@ -131,19 +146,17 @@ public class AgentEntity {
     public void removeContract(ContractEntity contract) {
     	getContracts().remove(contract);
     }
-
-    @ManyToMany
-    @JoinTable(name = "agent_roles", joinColumns = @JoinColumn(name = "agent_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+	
     public Set<RoleEntity> getRoles() {
-        return roles;
+        return roleEntities;
     }
 
-    public void setRoles(Set<RoleEntity> roles) {
-        this.roles = roles;
+    public void setRoles(Set<RoleEntity> roleEntities) {
+        this.roleEntities = roleEntities;
     }
     
-    public void addRole(RoleEntity role) {
-        roles.add(role);
+    public void addRole(RoleEntity roleEntity) {
+        roleEntities.add(roleEntity);
     }
+    
 }

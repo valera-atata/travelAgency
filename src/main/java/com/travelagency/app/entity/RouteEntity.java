@@ -7,17 +7,22 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "routes")
-//@Table(name = "routes", schema = "", catalog = "relationship")
 public class RouteEntity {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "route_id")
     private Long routeId;
+	
+	@Column(name = "route", nullable = false, insertable = true, updatable = true, length = 400)
     private String route;
+	
+    @Column(name = "country", nullable = false, insertable = true, updatable = true, length = 200)
     private String country;
     
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TourEntity> tours = new HashSet<TourEntity>();
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "route_id", nullable = false, insertable = true, updatable = true)
+    
     public Long getRouteId() {
         return routeId;
     }
@@ -26,8 +31,6 @@ public class RouteEntity {
         this.routeId = routeId;
     }
 
-    @Basic
-    @Column(name = "route", nullable = true, insertable = true, updatable = true, length = 400)
     public String getRoute() {
         return route;
     }
@@ -36,8 +39,6 @@ public class RouteEntity {
         this.route = route;
     }
 
-    @Basic
-    @Column(name = "country", nullable = true, insertable = true, updatable = true, length = 200)
     public String getCountry() {
         return country;
     }
@@ -46,7 +47,6 @@ public class RouteEntity {
         this.country = country;
     }
 
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<TourEntity> getTours() {
         return this.tours;
     }

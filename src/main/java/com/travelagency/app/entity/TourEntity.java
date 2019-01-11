@@ -10,19 +10,31 @@ import javax.persistence.*;
 //@Table(name = "tours", schema = "", catalog = "relationship")
 @Table(name = "tours")
 public class TourEntity {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "tour_id")
     private Long tourId;
+	
+	@Column(name = "organizer", nullable = false, insertable = true, updatable = true, length = 200)
     private String organizer;
+	
+	@Column(name = "date", nullable = false, insertable = true, updatable = true)
     private Date date;
+	
+	@Column(name = "type", nullable = false, insertable = true, updatable = true, length = 200)
     private String type;
+    
+    @Column(name = "cost", nullable = false, insertable = true, updatable = true)
     private Integer cost;
     
+    @ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
+    @JoinColumn(name = "route_id")
     private RouteEntity route;
     
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ContractEntity> contracts = new HashSet<ContractEntity>();
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tour_id", nullable = false, insertable = true, updatable = true)
     public Long getTourId() {
         return tourId;
     }
@@ -31,8 +43,6 @@ public class TourEntity {
         this.tourId = tourId;
     }
 
-    @Basic
-    @Column(name = "organizer", nullable = true, insertable = true, updatable = true, length = 200)
     public String getOrganizer() {
 		return organizer;
 	}
@@ -40,9 +50,7 @@ public class TourEntity {
 	public void setOrganizer(String organizer) {
 		this.organizer = organizer;
 	}
-
-	@Basic
-    @Column(name = "date", nullable = true, insertable = true, updatable = true, length = 200)
+    
 	public Date getDate() {
 		return date;
 	}
@@ -51,8 +59,6 @@ public class TourEntity {
 		this.date = date;
 	}
 
-	@Basic
-    @Column(name = "type", nullable = true, insertable = true, updatable = true, length = 200)
 	public String getType() {
 		return type;
 	}
@@ -61,8 +67,6 @@ public class TourEntity {
 		this.type = type;
 	}
 
-	@Basic
-    @Column(name = "cost", nullable = true, insertable = true, updatable = true)
 	public Integer getCost() {
 		return cost;
 	}
@@ -71,8 +75,6 @@ public class TourEntity {
 		this.cost = cost;
 	}
 
-	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
-    @JoinColumn(name = "route_id")
 	public RouteEntity getRoute(){
 		return route;
 	}
@@ -81,7 +83,6 @@ public class TourEntity {
 		this.route = route;
 	}
 	
-	@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<ContractEntity> getContracts() {
         return this.contracts;
     }

@@ -5,19 +5,30 @@ import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "contracts", schema = "", catalog = "relationship")
 @Table(name = "contracts")
 public class ContractEntity {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "contract_id", nullable = false, insertable = true, updatable = true)
     private Long contractId;
+	
+	@Column(name = "date", nullable = false, insertable = true, updatable = true, length = 200)
     private Date date;
     
+	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
+    @JoinColumn(name = "agent_id")
     private AgentEntity agent;
+	
+	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
+    @JoinColumn(name = "client_id")
     private ClientEntity client;
+	
+	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
+    @JoinColumn(name = "tour_id")
     private TourEntity tour;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "contract_id", nullable = false, insertable = true, updatable = true)
+   
     public Long getContractId() {
         return contractId;
     }
@@ -26,8 +37,6 @@ public class ContractEntity {
         this.contractId = contractId;
     }
 
-    @Basic
-    @Column(name = "date", nullable = true, insertable = true, updatable = true, length = 200)
     public Date getDate() {
 		return date;
 	}
@@ -36,8 +45,6 @@ public class ContractEntity {
 		this.date = date;
 	}
 	
-	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
-    @JoinColumn(name = "agent_id")
 	public AgentEntity getAgent(){
 		return agent;
 	}
@@ -46,8 +53,6 @@ public class ContractEntity {
 		this.agent = agent;
 	}
 	
-	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
-    @JoinColumn(name = "client_id")
 	public ClientEntity getClient(){
 		return client;
 	}
@@ -56,8 +61,6 @@ public class ContractEntity {
 		this.client = client;
 	}
 	
-	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
-    @JoinColumn(name = "tour_id")
 	public TourEntity getTour(){
 		return tour;
 	}

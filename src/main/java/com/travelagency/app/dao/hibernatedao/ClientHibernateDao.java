@@ -1,14 +1,7 @@
 package com.travelagency.app.dao.hibernatedao;
 
-import com.travelagency.app.dao.abstractdao.AbstractClientHibernateDao;
-import com.travelagency.app.entity.ClientEntity;
+import com.travelagency.app.dao.abstracthibernatedao.AbstractClientHibernateDao;
 
-public class ClientHibernateDao extends AbstractClientHibernateDao{
-
-	@Override
-	protected ClientEntity getFirstClient() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public class ClientHibernateDao extends AbstractClientHibernateDao {
 
 }
