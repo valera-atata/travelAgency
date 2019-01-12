@@ -14,7 +14,7 @@ public abstract class AbstractRoleHibernateDao implements BaseDao<RoleEntity> {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	public void save(RoleEntity agent) {
+	public void add(RoleEntity agent) {
 		sessionFactory.getCurrentSession().save(agent);
 	}
 	

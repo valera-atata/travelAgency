@@ -1,8 +1,7 @@
 package com.travelagency.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,17 +14,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.travelagency.app.entity.AgentEntity;
 import com.travelagency.app.entity.EmailForm;
 import com.travelagency.app.service.abstracts.SecurityService;
-import com.travelagency.app.service.abstracts.UserService;
+import com.travelagency.app.service.abstracts.TourService;
+import com.travelagency.app.service.abstracts.AgentService;
+import com.travelagency.app.service.abstracts.ClientService;
+import com.travelagency.app.service.abstracts.ContractService;
+import com.travelagency.app.service.abstracts.RouteService;
 import com.travelagency.app.validator.UserValidator;
 
 @Controller
 public class UserController {
 
 	@Autowired
-    private UserService userService;
+    private AgentService agentService;
+	
+	@Autowired
+    private ClientService clientService;
+	
+	@Autowired
+	private ContractService contractService;
+	
+	@Autowired
+	private RouteService routeService;
 
 	@Autowired
     private SecurityService securityService;
+	
+	@Autowired
+	private TourService tourService;
 
 	@Autowired
     private UserValidator userValidator;
@@ -61,16 +76,16 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        userService.save(userForm);
+        agentService.add(userForm);
         securityService.autoLogin(userForm.getLogin(), userForm.getConfirmPassword());
         model.addAttribute("form", new EmailForm());
-        return "redirect:/welcome";
+        return "redirect:/menu";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
     	System.out.println(333333333333L);
-    	System.out.println(userService);
+    	System.out.println(agentService);
     	System.out.println(userValidator);
     	System.out.println(securityService);
         if (error != null) {
@@ -82,36 +97,30 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/menu"}, method = RequestMethod.GET)
     public String welcome(Model model) {
     	System.out.println(444444444);
-    	model.addAttribute("form", new EmailForm());
-        return "welcome";
+        return "menu";
     }
     
+    @RequestMapping(value = {"/", "/menu"}, params = "my_clients", method = RequestMethod.GET)
+    public String myClients(Model model) {
+    	System.out.println("my_clients");
+    	String login = securityService.getCurrentUsername();
+    	clientService.getAllByAgent(securityService.getCurrentUsername());
+//    	ArrayList<ClientEntity> clients = c
+        return "menu";
+    }
+   
     
-//    @RequestMapping(value = {"/", "/welcome"}, params = "send", method = RequestMethod.POST)
-//    public String sendEmail(@ModelAttribute("form") EmailForm form, Model model){
-//    	System.out.println(55555555555L);
-//    	try{
-//    		new Sender().send(form.getSendEmail(), form.getPassword(), form.getRecipEmail(), form.getMessage());
-//    		model.addAttribute("result", "successful");	
-//    	} catch(MessagingException ex){
-//    		model.addAttribute("result", "error");
-//    		ex.printStackTrace();
-//    	}
-//    	model.addAttribute("form", new EmailForm());
-//        return "welcome";
-//    }
-    
-    @RequestMapping(value = {"/", "/welcome"}, params = "adminPage", method = RequestMethod.POST)
+    @RequestMapping(value = {"/", "/menu"}, params = "adminPage", method = RequestMethod.POST)
     public String adminPage(Model model){
     	return "redirect:/admin";
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
-    	List<AgentEntity> list = userService.findAll();
+    	List<AgentEntity> list = agentService.getAll();
 		model.addAttribute("users", list);
         return "admin";
     }

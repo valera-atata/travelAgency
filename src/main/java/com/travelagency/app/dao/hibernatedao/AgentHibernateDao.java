@@ -10,7 +10,7 @@ import com.travelagency.app.entity.AgentEntity;
 @Transactional
 public class AgentHibernateDao extends AbstractAgentHibernateDao {
 
-    public AgentEntity findByLogin(String login) {
+    public AgentEntity getByLogin(String login) {
     	String sql = "SELECT * FROM agents WHERE login = :login";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(AgentEntity.class);
 		query.setParameter("login", login);

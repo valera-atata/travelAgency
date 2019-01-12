@@ -3,13 +3,13 @@ package com.travelagency.app.service.implementations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.travelagency.app.service.abstracts.SecurityService;
-
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
@@ -39,5 +39,11 @@ public class SecurityServiceImpl implements SecurityService {
         if (authenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
+    }
+    
+    @Override
+    public String getCurrentUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 }

@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	System.out.println("userDao: " + abstractAgentHibernateDao);
-        AgentEntity user = abstractAgentHibernateDao.findByLogin(username);
+        AgentEntity user = abstractAgentHibernateDao.getByLogin(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
 

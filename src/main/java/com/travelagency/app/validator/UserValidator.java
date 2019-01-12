@@ -7,14 +7,14 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.travelagency.app.entity.AgentEntity;
-import com.travelagency.app.service.abstracts.UserService;
+import com.travelagency.app.service.abstracts.AgentService;
 
 
 @Component
 public class UserValidator implements Validator {
 
 	@Autowired
-    private UserService userService;
+    private AgentService agentService;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -30,7 +30,7 @@ public class UserValidator implements Validator {
             errors.rejectValue("username", "Size.userForm.username");
         }
 
-        if (userService.findByLogin(user.getLogin()) != null) {
+        if (agentService.getByLogin(user.getLogin()) != null) {
             errors.rejectValue("login", "Duplicate.userForm.username");
         }
 

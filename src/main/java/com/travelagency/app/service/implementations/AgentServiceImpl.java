@@ -8,41 +8,41 @@ import com.travelagency.app.dao.abstracthibernatedao.AbstractAgentHibernateDao;
 import com.travelagency.app.dao.abstracthibernatedao.AbstractRoleHibernateDao;
 import com.travelagency.app.entity.AgentEntity;
 import com.travelagency.app.entity.RoleEntity;
-import com.travelagency.app.service.abstracts.UserService;
+import com.travelagency.app.service.abstracts.AgentService;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AgentServiceImpl implements AgentService {
 
 	@Autowired
-    private AbstractAgentHibernateDao abstractAgentHibernateDao;
+    private AbstractAgentHibernateDao agentDao;
 
 	@Autowired
-    private AbstractRoleHibernateDao abstractRoleHibernateDao;
+    private AbstractRoleHibernateDao roleDao;
 
 	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void save(AgentEntity agentEntity) {
+    public void add(AgentEntity agentEntity) {
         agentEntity.setPassword(bCryptPasswordEncoder.encode(agentEntity.getPassword()));
         Set<RoleEntity> roleEntities = new HashSet<RoleEntity>();
-        roleEntities.add(abstractRoleHibernateDao.getById(1L));
+        roleEntities.add(roleDao.getById(1L));
         agentEntity.setRoles(roleEntities);
-        abstractAgentHibernateDao.save(agentEntity);
+        agentDao.add(agentEntity);
     }
 
     @Override
-    public AgentEntity findByLogin(String login) {
-        return abstractAgentHibernateDao.findByLogin(login);
+    public AgentEntity getByLogin(String login) {
+        return agentDao.getByLogin(login);
     }
     
     @Override
-    public List<AgentEntity> findAll(){
-    	return abstractAgentHibernateDao.findAll();
+    public List<AgentEntity> getAll(){
+    	return agentDao.getAll();
     }
     
 }

@@ -17,13 +17,13 @@ public abstract class AbstractAgentHibernateDao implements BaseDao<AgentEntity>{
 	@Autowired
 	protected SessionFactory sessionFactory;
 	
-	public void save(AgentEntity agentEntity) {
+	public void add(AgentEntity agentEntity) {
 		sessionFactory.getCurrentSession().save(agentEntity);
 	}
     
-    public List<AgentEntity> findAll(){
+    public List<AgentEntity> getAll(){
     	return sessionFactory.getCurrentSession().createQuery("from AgentEntity").list();
     }
     
-    public abstract AgentEntity findByLogin(String login);
+    public abstract AgentEntity getByLogin(String login);
 }

@@ -50,10 +50,26 @@
 	
 	<mvc:annotation-driven /> 
 	
-	 <bean id="userService" class="com.travelagency.app.service.implementations.UserServiceImpl"/>
+	 <bean id="agentService" class="com.travelagency.app.service.implementations.AgentServiceImpl"/>
 	 
-	 <bean id="userDao" class="com.travelagency.app.dao.hibernatedao.AgentHibernateDao"/>
+	 <bean id="clientService" class="com.travelagency.app.service.implementations.ClientServiceImpl"/>
+	 
+	 <bean id="contractService" class="com.travelagency.app.service.implementations.ContractServiceImpl"/>
+	 
+	 <bean id="routeService" class="com.travelagency.app.service.implementations.RouteServiceImpl"/>
+	 
+	 <bean id="tourService" class="com.travelagency.app.service.implementations.TourServiceImpl"/>
+	 
+	 <bean id="agentDao" class="com.travelagency.app.dao.hibernatedao.AgentHibernateDao"/>
+	 
+	 <bean id="clientDao" class="com.travelagency.app.dao.hibernatedao.ClientHibernateDao"/>
+	 
+	 <bean id="contractDao" class="com.travelagency.app.dao.hibernatedao.ContractHibernateDao"/>
 	 
 	 <bean id="roleDao" class="com.travelagency.app.dao.hibernatedao.RoleHibernateDao"/>
+	 
+	 <bean id="routeDao" class="com.travelagency.app.dao.hibernatedao.RouteHibernateDao"/>
+	 
+	 <bean id="tourDao" class="com.travelagency.app.dao.hibernatedao.TourHibernateDao"/>
 	
 </beans>
