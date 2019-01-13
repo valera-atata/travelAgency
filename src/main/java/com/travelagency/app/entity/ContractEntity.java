@@ -16,15 +16,15 @@ public class ContractEntity {
 	@Column(name = "date", nullable = false, insertable = true, updatable = true, length = 200)
     private Date date;
     
-	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
+	@ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
     @JoinColumn(name = "agent_id")
     private AgentEntity agent;
 	
-	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
+	@ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private ClientEntity client;
 	
-	@ManyToOne(cascade={CascadeType.PERSIST},fetch=FetchType.LAZY)
+	@ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
     @JoinColumn(name = "tour_id")
     private TourEntity tour;
     

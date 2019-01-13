@@ -32,7 +32,7 @@ public class ClientEntity {
 	@Column(name = "phone", nullable = true, insertable = true, updatable = true)
     private Long phone;
 
-	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private Set<ContractEntity> contracts = new HashSet<ContractEntity>();
   
     public Long getClientId() {

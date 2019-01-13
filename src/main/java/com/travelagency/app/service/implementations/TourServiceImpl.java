@@ -1,5 +1,7 @@
 package com.travelagency.app.service.implementations;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,11 @@ public class TourServiceImpl implements TourService {
 	@Override
 	public void add(TourEntity tour) {
 		tourDao.add(tour);
+	}
+	
+	@Override
+	public List<TourEntity> getAll(){
+		return tourDao.getAll();
 	}
 	
 }

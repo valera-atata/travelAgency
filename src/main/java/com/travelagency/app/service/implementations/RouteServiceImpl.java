@@ -1,5 +1,7 @@
 package com.travelagency.app.service.implementations;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +20,8 @@ public class RouteServiceImpl implements RouteService {
 		routeDao.add(route);
 	}
 	
+	@Override
+	public List<RouteEntity> getAll(){
+		return routeDao.getAll();
+	}
 }

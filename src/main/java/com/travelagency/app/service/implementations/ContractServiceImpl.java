@@ -1,5 +1,7 @@
 package com.travelagency.app.service.implementations;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +20,13 @@ public class ContractServiceImpl implements ContractService {
 		contractDao.add(contract);
 	}
 	
+	@Override
+	public List<ContractEntity> getAllByAgent(String login){
+		return contractDao.getAllByAgent(login);
+	}
+	
+	@Override
+	public List<ContractEntity> getAll(){
+		return contractDao.getAll();
+	}
 }

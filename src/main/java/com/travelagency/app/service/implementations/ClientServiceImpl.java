@@ -26,15 +26,12 @@ public class ClientServiceImpl implements ClientService{
 	
 	@Override
 	public List<ClientEntity> getAllByAgent(String login) {
-		agentDao.getByLogin(login).getAgentId();
-		
-		return null;
+		return clientDao.getAllByAgent(login);
 	}
 
 	@Override
 	public List<ClientEntity> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientDao.getAll();
 	}
 
 	

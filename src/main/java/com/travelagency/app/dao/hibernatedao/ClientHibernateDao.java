@@ -7,20 +7,18 @@ import javax.transaction.Transactional;
 import org.hibernate.SQLQuery;
 
 import com.travelagency.app.dao.abstracthibernatedao.AbstractClientHibernateDao;
-import com.travelagency.app.entity.AgentEntity;
 import com.travelagency.app.entity.ClientEntity;
 
 @Transactional
 public class ClientHibernateDao extends AbstractClientHibernateDao {
 
-	public List<ClientEntity> getAllByAgent(AgentEntity agent){
-//		String sql = "SELECT * FROM clients WHERE agent_id = :id";
-//		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(ClientEntity.class);
-//		query.setParameter("login", agentId);
-//    	AgentEntity agentEntity = (AgentEntity) query.uniqueResult();
-//    	System.out.println("AGENT BY LOGIN:  " + agentEntity);
-//    	return agentEntity;
-		return null;
+	public List<ClientEntity> getAllByAgent(String login){
+		String sql = "select * from clients where clients.client_id in "
+				+ "(select contracts.client_id from contracts where contracts.agent_id = "
+				+ "(select agents.agent_id from agents where agents.login = :login))";
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(ClientEntity.class);
+		query.setParameter("login", login);
+		return query.list();
 	}
 	
 }

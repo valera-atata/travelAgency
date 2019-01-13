@@ -46,4 +46,11 @@ public class SecurityServiceImpl implements SecurityService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
     }
+    
+    @Override
+    public boolean isAdmin() {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	return auth.getAuthorities().stream()
+    	          .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+    }
 }

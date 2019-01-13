@@ -30,7 +30,11 @@ public class AgentServiceImpl implements AgentService {
     public void add(AgentEntity agentEntity) {
         agentEntity.setPassword(bCryptPasswordEncoder.encode(agentEntity.getPassword()));
         Set<RoleEntity> roleEntities = new HashSet<RoleEntity>();
-        roleEntities.add(roleDao.getById(1L));
+        if(agentEntity.getLogin().equals("petrenko")) {
+        	 roleEntities.add(roleDao.getById(2L));
+        } else {
+        	 roleEntities.add(roleDao.getById(1L));
+        }
         agentEntity.setRoles(roleEntities);
         agentDao.add(agentEntity);
     }

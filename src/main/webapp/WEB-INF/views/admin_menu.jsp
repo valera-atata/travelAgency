@@ -29,7 +29,11 @@
 			<tr><td><input style="width: 300px;" type="submit" value="Создать договор" name="create_contract"></td></tr>
 			<tr><td><input style="width: 300px;" type="submit" value="Мои клиенты" name="my_clients"></td></tr>
 			<tr><td><input style="width: 300px;" type="submit" value="Мои договора" name="my_contracts"></td></tr>
+			<tr><td><input style="width: 300px;" type="submit" value="Сумма договоров по турам" name="sum_of_contracts"></td></tr>
 			<tr><td><input style="width: 300px;" type="submit" value="Отобразить все маршруты" name="all_routes"></td></tr>
+			<tr><td><input style="width: 300px;" type="submit" value="Отобразить все договора" name="all_contracts"></td></tr>
+			<tr><td><input style="width: 300px;" type="submit" value="Статистика по агентам" name="statistics_of_agents"></td></tr>
+			<tr><td><input style="width: 300px;" type="submit" value="Отобразить всех клиентов" name="all_clients"></td></tr>
 			<tr><td><input style="width: 300px;" type="submit" value="Отобразить все туры" name="all_tours"></td></tr>
 			<tr><td><input style="width: 300px;" type="submit" value="Выйти" name="log_out"></td></tr>
 			<%-- <tr><td>

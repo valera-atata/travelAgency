@@ -42,7 +42,7 @@ public class AgentEntity {
 	@Transient
     private String confirmPassword;
 	
-	@OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "agent", cascade = CascadeType.ALL)
     private Set<ContractEntity> contracts = new HashSet<ContractEntity>();
 	
 	@ManyToMany

@@ -32,7 +32,7 @@ public class TourEntity {
     @JoinColumn(name = "route_id")
     private RouteEntity route;
     
-    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private Set<ContractEntity> contracts = new HashSet<ContractEntity>();
     
     public Long getTourId() {

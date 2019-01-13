@@ -12,15 +12,17 @@ import com.travelagency.app.dao.BaseDao;
 import com.travelagency.app.entity.AgentEntity;
 
 @Transactional
-public abstract class AbstractAgentHibernateDao implements BaseDao<AgentEntity>{
+public abstract class AbstractAgentHibernateDao {
 	
 	@Autowired
 	protected SessionFactory sessionFactory;
 	
+//	@Override
 	public void add(AgentEntity agentEntity) {
 		sessionFactory.getCurrentSession().save(agentEntity);
 	}
     
+//	@Override
     public List<AgentEntity> getAll(){
     	return sessionFactory.getCurrentSession().createQuery("from AgentEntity").list();
     }

@@ -20,7 +20,7 @@ public class RouteEntity {
     @Column(name = "country", nullable = false, insertable = true, updatable = true, length = 200)
     private String country;
     
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
     private Set<TourEntity> tours = new HashSet<TourEntity>();
     
     public Long getRouteId() {
