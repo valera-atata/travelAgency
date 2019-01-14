@@ -29,4 +29,5 @@ public class ContractServiceImpl implements ContractService {
 	public List<ContractEntity> getAll(){
 		return contractDao.getAll();
 	}
+	
 }

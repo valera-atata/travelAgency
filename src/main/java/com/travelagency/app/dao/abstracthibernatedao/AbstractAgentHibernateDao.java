@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,4 +27,6 @@ public abstract class AbstractAgentHibernateDao {
     }
     
     public abstract AgentEntity getByLogin(String login);
+    
+    public abstract List<Object[]> getStatistics();
 }

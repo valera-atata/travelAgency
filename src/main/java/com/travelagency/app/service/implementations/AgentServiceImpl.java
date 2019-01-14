@@ -49,4 +49,9 @@ public class AgentServiceImpl implements AgentService {
     	return agentDao.getAll();
     }
     
+    @Override
+    public List<Object[]> getStatistics(){
+    	return agentDao.getStatistics();
+    }
+    
 }

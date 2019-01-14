@@ -183,15 +183,13 @@ public class UserController {
     
     @RequestMapping(value = {"/admin_menu"}, params = "sum_of_contracts", method = RequestMethod.POST)
     public String sumOfContracts(Model model) {
-    	
-//    	SELECT [organizer], [tour_date], [type], (SELECT count(*) from contracts WHERE contracts.c_tour_id = tours.tour_id) AS [Сумма договоров]
-//    			FROM tours
-//    			GROUP BY [organizer], [tour_date], [type], [tour_id];
-
     	System.out.println("sum_of_contracts");
-    	List<ClientEntity> myClients = clientService.getAllByAgent(securityService.getCurrentUsername());
-    	for(ClientEntity c : myClients) {
-    		System.out.println(c.getSurname());
+    	List<Object[]> myClients = tourService.getSumOfContracts();
+    	for(Object[] o : myClients) {
+    		for(int i = 0; i < o.length; i++) {
+    			System.out.println(o[i] + " ");
+    		}
+    		System.out.println();
     	}
     	
     	return "admin_menu";
@@ -234,9 +232,12 @@ public class UserController {
     @RequestMapping(value = {"/admin_menu"}, params = "statistics_of_agents", method = RequestMethod.POST)
     public String statisticsOfAgents(Model model) {
     	System.out.println("admin_statistics");
-    	List<ClientEntity> myClients = clientService.getAllByAgent(securityService.getCurrentUsername());
-    	for(ClientEntity c : myClients) {
-    		System.out.println(c.getSurname());
+    	List<Object[]> myClients = agentService.getStatistics();
+    	for(Object[] o : myClients) {
+    		for(int i = 0; i < o.length; i++) {
+    			System.out.println(o[i] + " ");
+    		}
+    		System.out.println();
     	}
     	return "admin_menu";
 //		return "admin_statistics";

@@ -11,4 +11,6 @@ public interface AgentService {
     AgentEntity getByLogin(String login);
     
     List<AgentEntity> getAll();
+    
+    List<Object[]> getStatistics();
 }

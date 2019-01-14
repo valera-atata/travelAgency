@@ -12,8 +12,8 @@ import com.travelagency.app.entity.ContractEntity;
 @Transactional
 public class ContractHibernateDao extends AbstractContractHibernateDao {
 
-	public List<ContractEntity> getAllByAgent(String login){
-		System.out.println("getAllContarctsByAgents");
+	@Override
+	public List<ContractEntity> getAllByAgent(String login) {
 		String sql = "select contracts.contract_id, contracts.date, contracts.agent_id, "
 				+ "contracts.client_id, contracts.tour_id from contracts, agents "
 				+ "where agents.login = :login "

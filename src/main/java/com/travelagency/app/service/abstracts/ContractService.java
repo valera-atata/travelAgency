@@ -11,4 +11,5 @@ public interface ContractService {
 	List<ContractEntity> getAllByAgent(String login);
 	
 	List<ContractEntity> getAll();
+	
 }

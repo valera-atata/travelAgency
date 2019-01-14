@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.travelagency.app.dao.abstracthibernatedao.AbstractTourHibernateDao;
+import com.travelagency.app.entity.ContractEntity;
 import com.travelagency.app.entity.TourEntity;
 import com.travelagency.app.service.abstracts.TourService;
 
@@ -23,6 +24,11 @@ public class TourServiceImpl implements TourService {
 	@Override
 	public List<TourEntity> getAll(){
 		return tourDao.getAll();
+	}
+	
+	@Override
+	public List<Object[]> getSumOfContracts() {
+		return tourDao.getSumOfContracts();
 	}
 	
 }
