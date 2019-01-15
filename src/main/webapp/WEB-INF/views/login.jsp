@@ -21,7 +21,7 @@
             <p>${error}</p>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <button type="submit">Login</button>
-            <p><a href="${contextPath}/registration">Create an account</a></p>
+            <p><a href="${contextPath}/agent_form">Create an account</a></p>
         </div>
     </form>
 

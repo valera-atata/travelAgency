@@ -12,4 +12,6 @@ public interface ClientService {
 	
 	List<ClientEntity> getAll();
 	
+	ClientEntity getById(Long id);
+	
 }

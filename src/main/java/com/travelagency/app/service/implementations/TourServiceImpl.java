@@ -31,4 +31,9 @@ public class TourServiceImpl implements TourService {
 		return tourDao.getSumOfContracts();
 	}
 	
+	@Override
+	public TourEntity getById(Long id) {
+		return tourDao.getById(id);
+	}
+	
 }

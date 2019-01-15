@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.travelagency.app.dao.BaseDao;
-import com.travelagency.app.entity.ContractEntity;
 import com.travelagency.app.entity.TourEntity;
 
 @Transactional
@@ -25,6 +24,11 @@ public abstract class AbstractTourHibernateDao {
 //	@Override
 	public List<TourEntity> getAll() {
 		return sessionFactory.getCurrentSession().createQuery("from TourEntity").list();
+	}
+	
+//	@Override
+	public TourEntity getById(Long id) {
+		return (TourEntity) sessionFactory.getCurrentSession().createQuery("from TourEntity where id=?").setParameter(0, id).uniqueResult();
 	}
 	
 	public abstract List<Object[]> getSumOfContracts();

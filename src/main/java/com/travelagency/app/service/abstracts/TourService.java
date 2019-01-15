@@ -11,4 +11,6 @@ public interface TourService {
 	List<TourEntity> getAll();
 	
 	List<Object[]> getSumOfContracts();
+	
+	TourEntity getById(Long id);
 }

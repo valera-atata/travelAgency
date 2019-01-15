@@ -18,7 +18,6 @@ public class AgentHibernateDao extends AbstractAgentHibernateDao {
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(AgentEntity.class);
 		query.setParameter("login", login);
     	AgentEntity agentEntity = (AgentEntity) query.uniqueResult();
-    	System.out.println("AGENT BY LOGIN:  " + agentEntity);
     	return agentEntity;
     }
 	

@@ -12,34 +12,40 @@
 </head>
 <body>
 
-<div>   
-<%-- 	<form action="${contextPath}/logout" method="POST">
-	    <input type="submit" value="Logout"/>
-	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-	</form> --%>
-	
-	<form action="${contextPath}/logout" method="POST">
-	    <input type="submit" value="Logout"/>
-	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
-	</form>
-	
-	<form:form method="POST" modelAttribute="form">
-		<table style="margin: center">
-		
-			<tr><td><input style="width: 300px;" type="submit" value="Создать договор" name="create_contract"></td></tr>
-			<tr><td><input style="width: 300px;" type="submit" value="Мои клиенты" name="my_clients"></td></tr>
-			<tr><td><input style="width: 300px;" type="submit" value="Мои договора" name="my_contracts"></td></tr>
-			<tr><td><input style="width: 300px;" type="submit" value="Отобразить все маршруты" name="all_routes"></td></tr>
-			<tr><td><input style="width: 300px;" type="submit" value="Отобразить все туры" name="all_tours"></td></tr>
-			<tr><td><input style="width: 300px;" type="submit" value="Выйти" name="log_out"></td></tr>
-			<%-- <tr><td>
+<div>	
+		<table>
+			<tr><td>
+				<form:form method="POST" action="${contextPath}/create_contract">
+					<button type="submit" style="width: 300px;">Create contract</button>
+				</form:form>
+			</td></tr>
+			<tr><td>
+				<form:form method="POST" action="${contextPath}/my_contracts">
+					<button type="submit" style="width: 300px;">My contracts</button>
+				</form:form>
+			</td></tr>
+			<tr><td>
+				<form:form method="POST" action="${contextPath}/my_clients">
+					<button type="submit" style="width: 300px;">My clients</button>
+				</form:form>
+			</td></tr>
+			<tr><td>
+				<form:form method="POST" action="${contextPath}/all_routes">
+					<button type="submit" style="width: 300px;">All routes</button>
+				</form:form>
+			</td></tr>
+			<tr><td>
+				<form:form method="POST" action="${contextPath}/all_tours">
+					<button type="submit" style="width: 300px;">All tours</button>
+				</form:form>
+			</td></tr>
+			<tr><td>
 				<form action="${contextPath}/logout" method="POST">
-				    <input type="submit" value="ВVыйти"/>
+				    <input type="submit" value="Logout" style="width: 300px;" />
 				    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
 				</form>
-			</td></tr> --%>
+			</td></tr>
 		</table>
-	</form:form>
 </div>
 </body>
 </html>

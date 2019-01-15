@@ -30,4 +30,9 @@ public class ContractServiceImpl implements ContractService {
 		return contractDao.getAll();
 	}
 	
+	@Override
+	public ContractEntity getById(Long id) {
+		return contractDao.getById(id);
+	}
+	
 }

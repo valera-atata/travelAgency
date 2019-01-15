@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.travelagency.app.entity.AgentEntity;
 import com.travelagency.app.entity.ClientEntity;
@@ -52,40 +53,20 @@ public class UserController {
 	@Autowired
     private UserValidator userValidator;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @RequestMapping(value = "/agent_form", method = RequestMethod.GET)
     public String registration(Model model) {
-    	System.out.println(1111111111);
-        model.addAttribute("userForm", new AgentEntity());
-        return "registration";
+        model.addAttribute("agentForm", new AgentEntity());
+        return "agent_form";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @RequestMapping(value = "/agent_form", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") AgentEntity userForm, BindingResult bindingResult, Model model) {
-    	System.out.println(222222222);
-    	userForm.setSurname("surname");
-    	userForm.setName("name");
-    	userForm.setPatron("patron");
-    	userForm.setPassport("passport");
-    	userForm.setAddress("address");
-    	userForm.setPhone(9700000000L);
-    	
-    	System.out.println(userForm.getAgentId());
-    	System.out.println(userForm.getSurname());
-    	System.out.println(userForm.getName());
-    	System.out.println(userForm.getPatron());
-    	System.out.println(userForm.getPassport());
-    	System.out.println(userForm.getAddress());
-    	System.out.println(userForm.getPhone());
-    	System.out.println(userForm.getLogin());
-    	System.out.println(userForm.getPassword());
-    	System.out.println(userForm.getConfirmPassword());
         userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "redirect:/agent_form";
         }
         agentService.add(userForm);
         securityService.autoLogin(userForm.getLogin(), userForm.getConfirmPassword());
-        model.addAttribute("form", new EmailForm());
         return "redirect:/menu";
     }
 
@@ -104,171 +85,302 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/menu"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-    	System.out.println(444444444);
     	if(securityService.isAdmin()) {
     		return "redirect:/admin_menu";
     	}
         return "menu";
     }
-    
-    @RequestMapping(value = {"/", "/menu", "/admin_menu"}, params = "create_contract", method = RequestMethod.POST)
+/////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+    @RequestMapping(value = "/create_contract", method = RequestMethod.POST)
     public String createContract(Model model) {
     	System.out.println("create_contract");
-    	List<ClientEntity> myClients = clientService.getAllByAgent(securityService.getCurrentUsername());
-    	for(ClientEntity c : myClients) {
-    		System.out.println(c.getSurname());
-    	}
-    	if(securityService.isAdmin()) {
-    		return "admin_menu";
-    	}
-    	return "menu";
-//        return "create_contract_form";
+    	
+    	ContractEntity contract = new ContractEntity();
+    	contract.setAgent(agentService.getByLogin(securityService.getCurrentUsername()));
+    	List<ClientEntity> clients = clientService.getAll();
+    	List<TourEntity> tours = tourService.getAll();
+    	 
+    	model.addAttribute("contractForm", contract);
+    	model.addAttribute("clients", clients);
+    	model.addAttribute("tours", tours);
+    	return "contract_form";
     }
     
-    @RequestMapping(value = {"/", "/menu", "/admin_menu"}, params = "my_clients", method = RequestMethod.POST)
-    public String myClients(Model model) {
-    	System.out.println("my_clients");
-    	List<ClientEntity> myClients = clientService.getAllByAgent(securityService.getCurrentUsername());
-    	for(ClientEntity c : myClients) {
-    		System.out.println(c.getSurname());
-    	}
-    	if(securityService.isAdmin()) {
-    		return "admin_menu";
-    	}
-    	return "menu";
-//        return "my_clients";
+    @RequestMapping(value = "/create_contract", params = "submit_contract", method = RequestMethod.POST)
+    public String confirmCreateContract(@ModelAttribute("contractForm") ContractEntity contractForm, Model model) {
+    	System.out.println("submit_contract " + contractForm.getClient().getClientId());
+    	contractForm.setAgent(agentService.getByLogin(securityService.getCurrentUsername()));
+    	contractForm.setClient(clientService.getById(contractForm.getClient().getClientId()));
+    	contractForm.setTour(tourService.getById(contractForm.getTour().getTourId()));
+    	
+    	return "forward:/my_contracts";
     }
-   
-    @RequestMapping(value = {"/", "/menu", "/admin_menu"}, params = "my_contracts", method = RequestMethod.POST)
+    
+    @RequestMapping(value = "/my_contracts", method = RequestMethod.POST)
     public String myContracts(Model model) {
     	System.out.println("my_contracts");
     	List<ContractEntity> myContracts = contractService.getAllByAgent(securityService.getCurrentUsername());
-    	for(ContractEntity c : myContracts) {
-    		System.out.println(c.getAgent().getSurname() + " " + c.getClient().getSurname());
-    	}
-    	if(securityService.isAdmin()) {
-    		return "admin_menu";
-    	}
-        return "menu";
-//        return "my_contracts";
+    	model.addAttribute("myContracts", myContracts);
+    	return "my_contracts";
     }
     
-    @RequestMapping(value = {"/", "/menu"}, params = "all_routes", method = RequestMethod.POST)
-    public String allRoutes(Model model) {
-    	System.out.println("all_routes");
-    	List<RouteEntity> myContracts = routeService.getAll();
-    	for(RouteEntity c : myContracts) {
-    		System.out.println(c.getCountry());
-    	}
-        return "menu";
-//        return "all_routes";
-    }
-    
-    @RequestMapping(value = {"/", "/menu"}, params = "all_tours", method = RequestMethod.POST)
-    public String allTours(Model model) {
-    	System.out.println("all_tours");
-    	List<TourEntity> myContracts = tourService.getAll();
-    	for(TourEntity c : myContracts) {
-    		System.out.println(c.getDate());
-    	}
-        return "menu";
-//        return "all_tours";
-    }
-    
-    @RequestMapping(value = {"/admin_menu"}, method = RequestMethod.GET)
-    public String adminMenu(Model model) {
-    	return "admin_menu";
-    }
-    
-    
-    @RequestMapping(value = {"/admin_menu"}, params = "sum_of_contracts", method = RequestMethod.POST)
-    public String sumOfContracts(Model model) {
-    	System.out.println("sum_of_contracts");
-    	List<Object[]> myClients = tourService.getSumOfContracts();
-    	for(Object[] o : myClients) {
-    		for(int i = 0; i < o.length; i++) {
-    			System.out.println(o[i] + " ");
-    		}
-    		System.out.println();
-    	}
+    @RequestMapping(value = "/edit_contract", method = RequestMethod.POST)
+    public String editContract(@RequestParam("contractId") Long contractId, Model model) {
+    	System.out.println("edit_contract " + contractId);
     	
-    	return "admin_menu";
-    		//        return "sum_of_contracts";
+    	ContractEntity contract = contractService.getById(contractId);
+    	List<ClientEntity> clients = clientService.getAll();
+    	List<TourEntity> tours = tourService.getAll();
+    	
+    	model.addAttribute("contractForm", contract);
+    	model.addAttribute("clients", clients);
+    	model.addAttribute("tours", tours);
+    	return "contract_form";
     }
     
-    @RequestMapping(value = {"/admin_menu"}, params = "all_routes", method = RequestMethod.POST)
-    public String allAdminRoutes(Model model) {
-    	System.out.println("admin_all_routes");
-    	List<RouteEntity> myContracts = routeService.getAll();
-    	for(RouteEntity c : myContracts) {
-    		System.out.println(c.getCountry());
-    	}
-    	return "admin_menu";
-//   		return "admin_all_routes";
+    @RequestMapping(value = "/edit_contract", params = "submit_contract", method = RequestMethod.POST)
+    public String SubmitEditContract(@ModelAttribute("contractForm") ContractEntity contractForm, Model model) {
+    	System.out.println("submit_edit_contract");
+    	
+    	contractForm.setAgent(agentService.getByLogin(securityService.getCurrentUsername()));
+    	contractForm.setClient(clientService.getById(contractForm.getClient().getClientId()));
+    	contractForm.setTour(tourService.getById(contractForm.getTour().getTourId()));
+    	
+    	return "forward:/my_contracts";
     }
     
-    @RequestMapping(value = {"/admin_menu"}, params = "all_tours", method = RequestMethod.POST)
-    public String allAdminTours(Model model) {
-    	System.out.println("admin_all_tours");
-    	List<TourEntity> myContracts = tourService.getAll();
-    	for(TourEntity c : myContracts) {
-    		System.out.println(c.getDate());
-    	}
-    	return "admin_menu";
-//		return "admin_all_tours";
+    @RequestMapping(value = "/delete_contract", method = RequestMethod.POST)
+    public String deleteContract(@RequestParam("contractId") Long contracttId, Model model) {
+    	System.out.println("delete_contract " + contracttId);
+    	return "forward:/my_contracts";
     }
     
-    @RequestMapping(value = {"/admin_menu"}, params = "all_contracts", method = RequestMethod.POST)
-    public String allContracts(Model model) {
-    	System.out.println("admin_all_contracts");
-    	List<ContractEntity> myContracts = contractService.getAll();
-    	for(ContractEntity c : myContracts) {
-    		System.out.println(c.getAgent().getSurname() + " " + c.getClient().getSurname());
-    	}
-    	return "admin_menu";
-//		return "admin_all_contracts";
+    /////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+    @RequestMapping(value = "/my_clients", method = RequestMethod.POST)
+    public String myClients(Model model) {
+    	System.out.println("my_clients");
+    	List<ClientEntity> myClients = clientService.getAllByAgent(securityService.getCurrentUsername());
+    	model.addAttribute("myClients", myClients);
+    	return "my_clients";
     }
     
-    @RequestMapping(value = {"/admin_menu"}, params = "statistics_of_agents", method = RequestMethod.POST)
-    public String statisticsOfAgents(Model model) {
-    	System.out.println("admin_statistics");
-    	List<Object[]> myClients = agentService.getStatistics();
-    	for(Object[] o : myClients) {
-    		for(int i = 0; i < o.length; i++) {
-    			System.out.println(o[i] + " ");
-    		}
-    		System.out.println();
-    	}
-    	return "admin_menu";
-//		return "admin_statistics";
+    @RequestMapping(value = "/edit_client", method = RequestMethod.POST)
+    public String editClient(@RequestParam("clientId") Long clientId, Model model) {
+    	System.out.println("edit_client " + clientId);
+    	model.addAttribute("clientForm", clientService.getById(clientId));
+    	return "client_form";
     }
     
-    @RequestMapping(value = {"/admin_menu"}, params = "all_clients", method = RequestMethod.POST)
-    public String allClients(Model model) {
-    	System.out.println("admin_all_clients");
-    	List<ClientEntity> myClients = clientService.getAll();
-    	for(ClientEntity c : myClients) {
-    		System.out.println(c.getSurname());
-    	}
-    	return "admin_menu";
-//		return "admin_all_clients";
-    }
-    
-    
-    
-    
-    
-    @RequestMapping(value = {"/", "/menu"}, params = "adminPage", method = RequestMethod.POST)
-    public String adminPage(Model model){
-    	return "redirect:/admin";
-    }
+    @RequestMapping(value = "/edit_client", params = "submit_client", method = RequestMethod.POST)
+    public String SubmitEditClient(@ModelAttribute("clientForm") ClientEntity clientForm, Model model) {
+    	System.out.println("submit_client");
+    	System.out.println(clientForm.getSurname());
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String admin(Model model) {
-    	List<AgentEntity> list = agentService.getAll();
-		model.addAttribute("users", list);
-        return "admin";
+    	return "forward:/my_clients";
     }
+    
+    @RequestMapping(value = "/delete_client", method = RequestMethod.POST)
+    public String deleteClient(@RequestParam("clientId") Long clientId, Model model) {
+    	System.out.println("delete_client " + clientId);
+    	return "forward:/my_clients";
+    }
+    
+    @RequestMapping(value = "/add_client", method = RequestMethod.POST)
+    public String addClient(Model model) {
+    	System.out.println("add_client");
+    	model.addAttribute("clientForm", new ClientEntity());
+    	return "client_form";
+    }
+    
+    @RequestMapping(value = "/add_client", params = "submit_client", method = RequestMethod.POST)
+    public String SubmitAddtClient(@ModelAttribute("clientForm") ClientEntity clientForm, Model model) {
+    	System.out.println("submit_client");
+    	System.out.println(clientForm.getSurname());
+    	return "forward:/my_clients";
+    }
+    /////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "all_routes", method = RequestMethod.POST)
+		public String allRoutes(Model model) {
+		System.out.println("all_routes");
+		List<RouteEntity> routes = routeService.getAll();
+		model.addAttribute("routes", routes);
+		return "all_routes";
+	}
+	  
+	@RequestMapping(value = "all_tours", method = RequestMethod.POST)
+	public String allTours(Model model) {
+		System.out.println("all_tours");
+		List<TourEntity> tours = tourService.getAll();
+		model.addAttribute("tours", tours);
+		return "all_tours";
+	}
+    
+//    @RequestMapping(value = {"/", "/menu", "/admin_menu"}, params = "my_clients", method = RequestMethod.POST)
+//    public String myClients(Model model) {
+//    	System.out.println("my_clients");
+//    	List<ClientEntity> myClients = clientService.getAllByAgent(securityService.getCurrentUsername());
+//    	model.addAttribute("myClients", myClients);
+//    	if(securityService.isAdmin()) {
+//    		return "admin_menu";
+//    	}
+//        return "my_clients";
+//    }
+//    
+//    @RequestMapping(value = {"/edit_client"}, method = RequestMethod.GET)
+//    public String saveOrUpdateClient(Model model) {
+//    	System.out.println("edit_client");
+//        model.addAttribute("clientForm", new ClientEntity());
+//        return "client_form";
+//    	
+////    	if(securityService.isAdmin()) {
+////    		return "admin_menu";
+////    	}
+////    	return "menu";
+////      return "edit_client";
+//    }
+//    
+//    @RequestMapping(value = "/edit_client", method = RequestMethod.POST)
+//    public String saveOrUpdateClient(@ModelAttribute("clientForm") ClientEntity clientForm, BindingResult bindingResult, Model model) {
+//       	System.out.println(clientForm.getClientId());
+//    	System.out.println(clientForm.getSurname());
+//    	System.out.println(clientForm.getName());
+//    	System.out.println(clientForm.getPatron());
+//    	System.out.println(clientForm.getPassport());
+//    	System.out.println(clientForm.getAddress());
+//    	System.out.println(clientForm.getPhone());
+////        userValidator.validate(clientForm, bindingResult);
+////        if (bindingResult.hasErrors()) {
+////            return "redirect:/agent_form";
+////        }
+////        agentService.add(userForm);
+////        securityService.autoLogin(userForm.getLogin(), userForm.getConfirmPassword());
+//        return "redirect:/menu";
+//    }
+//    
+//    
+////    @RequestMapping(value = {"/", "/menu", "/admin_menu"}, params = "edit_client", method = RequestMethod.POST)
+////    public String saveOrUpdateClient(Model model) {
+////    	System.out.println("edit_client");
+//////    	List<ClientEntity> myClients = clientService.getAllByAgent(securityService.getCurrentUsername());
+////    	if(securityService.isAdmin()) {
+////    		return "admin_menu";
+////    	}
+////    	return "menu";
+//////        return "edit_client";
+////    }
+//   
+//    @RequestMapping(value = {"/", "/menu", "/admin_menu"}, params = "my_contracts", method = RequestMethod.POST)
+//    public String myContracts(Model model) {
+//    	System.out.println("my_contracts");
+//    	List<ContractEntity> myContracts = contractService.getAllByAgent(securityService.getCurrentUsername());
+//    	for(ContractEntity c : myContracts) {
+//    		System.out.println(c.getAgent().getSurname() + " " + c.getClient().getSurname());
+//    	}
+//    	if(securityService.isAdmin()) {
+//    		return "admin_menu";
+//    	}
+//        return "menu";
+////        return "my_contracts";
+//    }
+//    
+
+//    
+//    @RequestMapping(value = {"/admin_menu"}, method = RequestMethod.GET)
+//    public String adminMenu(Model model) {
+//    	return "admin_menu";
+//    }
+//    
+//    
+//    @RequestMapping(value = {"/admin_menu"}, params = "sum_of_contracts", method = RequestMethod.POST)
+//    public String sumOfContracts(Model model) {
+//    	System.out.println("sum_of_contracts");
+//    	List<Object[]> myClients = tourService.getSumOfContracts();
+//    	for(Object[] o : myClients) {
+//    		for(int i = 0; i < o.length; i++) {
+//    			System.out.println(o[i] + " ");
+//    		}
+//    		System.out.println();
+//    	}
+//    	
+//    	return "admin_menu";
+//    		//        return "sum_of_contracts";
+//    }
+//    
+//    @RequestMapping(value = {"/admin_menu"}, params = "all_routes", method = RequestMethod.POST)
+//    public String allAdminRoutes(Model model) {
+//    	System.out.println("admin_all_routes");
+//    	List<RouteEntity> myContracts = routeService.getAll();
+//    	for(RouteEntity c : myContracts) {
+//    		System.out.println(c.getCountry());
+//    	}
+//    	return "admin_menu";
+////   		return "admin_all_routes";
+//    }
+//    
+//    @RequestMapping(value = {"/admin_menu"}, params = "all_tours", method = RequestMethod.POST)
+//    public String allAdminTours(Model model) {
+//    	System.out.println("admin_all_tours");
+//    	List<TourEntity> myContracts = tourService.getAll();
+//    	for(TourEntity c : myContracts) {
+//    		System.out.println(c.getDate());
+//    	}
+//    	return "admin_menu";
+////		return "admin_all_tours";
+//    }
+//    
+//    @RequestMapping(value = {"/admin_menu"}, params = "all_contracts", method = RequestMethod.POST)
+//    public String allContracts(Model model) {
+//    	System.out.println("admin_all_contracts");
+//    	List<ContractEntity> myContracts = contractService.getAll();
+//    	for(ContractEntity c : myContracts) {
+//    		System.out.println(c.getAgent().getSurname() + " " + c.getClient().getSurname());
+//    	}
+//    	return "admin_menu";
+////		return "admin_all_contracts";
+//    }
+//    
+//    @RequestMapping(value = {"/admin_menu"}, params = "statistics_of_agents", method = RequestMethod.POST)
+//    public String statisticsOfAgents(Model model) {
+//    	System.out.println("admin_statistics");
+//    	List<Object[]> myClients = agentService.getStatistics();
+//    	for(Object[] o : myClients) {
+//    		for(int i = 0; i < o.length; i++) {
+//    			System.out.println(o[i] + " ");
+//    		}
+//    		System.out.println();
+//    	}
+//    	return "admin_menu";
+////		return "admin_statistics";
+//    }
+//    
+//    @RequestMapping(value = {"/admin_menu"}, params = "all_clients", method = RequestMethod.POST)
+//    public String allClients(Model model) {
+//    	System.out.println("admin_all_clients");
+//    	List<ClientEntity> myClients = clientService.getAll();
+//    	for(ClientEntity c : myClients) {
+//    		System.out.println(c.getSurname());
+//    	}
+//    	return "admin_menu";
+////		return "admin_all_clients";
+//    }
+//    
+//    
+//    
+//    
+//    
+//    @RequestMapping(value = {"/", "/menu"}, params = "adminPage", method = RequestMethod.POST)
+//    public String adminPage(Model model){
+//    	return "redirect:/admin";
+//    }
+//
+//    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+//    public String admin(Model model) {
+//    	List<AgentEntity> list = agentService.getAll();
+//		model.addAttribute("users", list);
+//        return "admin";
+//    }
     
     
     

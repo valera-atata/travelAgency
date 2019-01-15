@@ -34,6 +34,9 @@ public class ClientServiceImpl implements ClientService{
 		return clientDao.getAll();
 	}
 
-	
+	@Override
+	public ClientEntity getById(Long id) {
+		return clientDao.getById(id);
+	}
 	
 }

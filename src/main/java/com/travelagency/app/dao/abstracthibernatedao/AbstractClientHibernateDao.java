@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.travelagency.app.dao.BaseDao;
 import com.travelagency.app.entity.ClientEntity;
+import com.travelagency.app.entity.RoleEntity;
 
 @Transactional
 public abstract class AbstractClientHibernateDao {
@@ -26,6 +27,11 @@ public abstract class AbstractClientHibernateDao {
 		return sessionFactory.getCurrentSession().createQuery("from ClientEntity").list();
 	}
 
+//	@Override
+	public ClientEntity getById(Long id) {
+		return (ClientEntity) sessionFactory.getCurrentSession().createQuery("from ClientEntity where id=?").setParameter(0, id).uniqueResult();
+	}
+	
 	public abstract List<ClientEntity> getAllByAgent(String login);
 	
 }
