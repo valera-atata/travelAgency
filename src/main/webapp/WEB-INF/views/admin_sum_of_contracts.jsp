@@ -20,32 +20,37 @@
     text-align: center;
    }
    .wrapper {
-   	 text-align: center;
-	}
+    text-align: center;
+   }
 </style>
 
 </head>
 <body>
-	<h1 align="center">List of routes</h1>
+	<h1 align="center">Sum of contracts for tours</h1>
 	<table border="1">
 		<tr>
-			<th width="300">Id</th>
-			<th width="300">Route</th>
-			<th width="300">Country</th>
+			<th width="150">Id</th>
+			<th width="150">Cost</th>
+			<th width="150">Organizer</th>
+			<th width="150">Date</th>
+			<th width="150">Type</th>
+			<th width="150">Number of contracts</th>
 		</tr>
-		<c:forEach items="${routes}" var="r">
+		<c:forEach items="${sumOfContracts}" var="t">
 			<tr>
-				<td>${r.routeId}</td>
-				<td>${r.route}</td>
-				<td>${r.country}</td>
+				<td>${t[0]}</td>
+				<td>${t[1]}</td>
+				<td>${t[2]}</td>
+				<td>${t[3]}</td>
+				<td>${t[4]}</td>
+				<td>${t[5]}</td>
 			</tr>
 		</c:forEach>
 	</table>
-	
 	<div class="wrapper">
     	<form:form method="GET" action="${contextPath}/menu">
 		<button type="submit" style="width: 300px;">Back to menu</button>
-	</form:form>
+		</form:form>
 	</div>
 	
 </body>

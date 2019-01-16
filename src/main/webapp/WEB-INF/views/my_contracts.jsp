@@ -83,5 +83,10 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="wrapper">
+    	<form:form method="GET" action="${contextPath}/menu">
+		<button type="submit" style="width: 300px;">Back to menu</button>
+		</form:form>
+	</div>
 </body>
 </html>

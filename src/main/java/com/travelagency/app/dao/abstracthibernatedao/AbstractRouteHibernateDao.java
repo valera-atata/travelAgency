@@ -26,4 +26,9 @@ public abstract class AbstractRouteHibernateDao {
 		return sessionFactory.getCurrentSession().createQuery("from RouteEntity").list();
 	}
 	
+//	@Override
+	public RouteEntity getById(Long id) {
+		return (RouteEntity) sessionFactory.getCurrentSession().createQuery("from RouteEntity where id=?").setParameter(0, id).uniqueResult();
+	}
+	
 }

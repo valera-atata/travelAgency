@@ -24,4 +24,9 @@ public class RouteServiceImpl implements RouteService {
 	public List<RouteEntity> getAll(){
 		return routeDao.getAll();
 	}
+	
+	@Override
+	public RouteEntity getById(Long id) {
+		return routeDao.getById(id);
+	}
 }

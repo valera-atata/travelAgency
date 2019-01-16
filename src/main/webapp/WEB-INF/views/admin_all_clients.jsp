@@ -20,24 +20,39 @@
     text-align: center;
    }
    .wrapper {
-   	 text-align: center;
+    text-align: center;
 	}
 </style>
-
 </head>
 <body>
-	<h1 align="center">List of routes</h1>
+	<h1 align="center">List of clients</h1>
+	<div class="wrapper">
+    	<form:form method="POST" action="${contextPath}/add_client">
+			<button type="submit" style="width: 300px;">Add client</button>
+		</form:form>
+	</div>
+		
+	<hr />
+
 	<table border="1">
 		<tr>
-			<th width="300">Id</th>
-			<th width="300">Route</th>
-			<th width="300">Country</th>
+			<th>Id</th>
+			<th>Surname</th>
+			<th>Name</th>
+			<th>Patron</th>
+			<th>Passport</th>
+			<th>Address</th>
+			<th>Phone</th>
 		</tr>
-		<c:forEach items="${routes}" var="r">
+		<c:forEach items="${clients}" var="c">
 			<tr>
-				<td>${r.routeId}</td>
-				<td>${r.route}</td>
-				<td>${r.country}</td>
+				<td>${c.clientId}</td>
+				<td>${c.surname}</td>
+				<td>${c.name}</td>
+				<td>${c.patron}</td>
+				<td>${c.passport}</td>
+				<td>${c.address}</td>
+				<td>${c.phone}</td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -45,8 +60,7 @@
 	<div class="wrapper">
     	<form:form method="GET" action="${contextPath}/menu">
 		<button type="submit" style="width: 300px;">Back to menu</button>
-	</form:form>
+		</form:form>
 	</div>
-	
 </body>
 </html>

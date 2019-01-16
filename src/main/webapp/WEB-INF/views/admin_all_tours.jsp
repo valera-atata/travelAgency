@@ -25,10 +25,10 @@
 </style>
 </head>
 <body>
-	<h1 align="center">List of routes</h1>
+	<h1 align="center">List of tours</h1>
 	<div class="wrapper">
-    	<form:form method="POST" action="${contextPath}/add_route">
-			<button type="submit" style="width: 300px;">Add route</button>
+    	<form:form method="POST" action="${contextPath}/add_tour">
+			<button type="submit" style="width: 300px;">Add tour</button>
 		</form:form>
 	</div>
 		
@@ -37,23 +37,32 @@
 	<table border="1">
 		<tr>
 			<th>Id</th>
+			<th>Organizer</th>
+			<th>Date</th>
+			<th>Type</th>
+			<th>Cost</th>
 			<th>Country</th>
 			<th>Route</th>
 			<th colspan="2">Action</th>
 		</tr>
-		<c:forEach items="${routes}" var="r">
+		<c:forEach items="${tours}" var="t">
 		
-			<c:url var="updateLink" value="/edit_route">
-				<c:param name="routeId" value="${r.routeId}" />
+			<c:url var="updateLink" value="/edit_tour">
+				<c:param name="tourId" value="${t.tourId}" />
 			</c:url>
 
-			<c:url var="deleteLink" value="/delete_route">
-				<c:param name="routeId" value="${r.routeId}" />
+			<c:url var="deleteLink" value="/delete_tour">
+				<c:param name="tourId" value="${t.tourId}" />
 			</c:url>
 			<tr>
-				<td>${r.routeId}</td>
-				<td>${r.country}</td>
-				<td>${r.route}</td>
+				<td>${t.tourId}</td>
+				<td>${t.organizer}</td>
+				<td>${t.date}</td>
+				<td>${t.type}</td>
+				<td>${t.cost}</td>
+				<td>${t.route.country}</td>
+				<td>${t.route.route}</td>
+				
 				<td>
 					<form:form method="POST" action="${updateLink}">
 						<button type="submit" value=>Edit</button>
@@ -67,7 +76,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-	
 	<div class="wrapper">
     	<form:form method="GET" action="${contextPath}/menu">
 			<button type="submit" style="width: 300px;">Back to menu</button>

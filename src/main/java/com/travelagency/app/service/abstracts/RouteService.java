@@ -9,4 +9,6 @@ public interface RouteService {
 	void add(RouteEntity route);
 
 	List<RouteEntity> getAll();
+	
+	RouteEntity getById(Long id);
 }

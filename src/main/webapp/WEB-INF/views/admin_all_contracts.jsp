@@ -21,31 +21,46 @@
    }
    .wrapper {
     text-align: center;
-   }
+	}
 </style>
-
 </head>
 <body>
-	<h1 align="center">List of routes</h1>
+	<h1 align="center">List of contracts</h1>
+	<hr />
+
 	<table border="1">
 		<tr>
-			<th width="150">Id</th>
-			<th width="150">Route</th>
-			<th width="150">Country</th>
-			<th width="150">Id</th>
-			<th width="150">Route</th>
-			<th width="150">Country</th>
-			<th width="150">Country</th>
+			<th>Id</th>
+			<th>Date</th>
+			<th>Agent's surname</th>
+			<th>Agent's name</th>
+			<th>Agent's patronymic</th>
+			<th>Client's surname</th>
+			<th>Client's name</th>
+			<th>Client's patronymic</th>
+			<th>Tour organizer</th>
+			<th>Tour date</th>
+			<th>Tour type</th>
+			<th>Tour cost</th>
+			<th>Country</th>
+			<th>Route</th>
 		</tr>
-		<c:forEach items="${tours}" var="t">
+		<c:forEach items="${contracts}" var="c">
 			<tr>
-				<td>${t.tourId}</td>
-				<td>${t.organizer}</td>
-				<td>${t.date}</td>
-				<td>${t.type}</td>
-				<td>${t.cost}</td>
-				<td>${t.route.country}</td>
-				<td>${t.route.route}</td>
+				<td>${c.contractId}</td>
+				<td>${c.date}</td>
+				<td>${c.agent.surname}</td>
+				<td>${c.agent.name}</td>
+				<td>${c.agent.patron}</td>
+				<td>${c.client.surname}</td>
+				<td>${c.client.name}</td>
+				<td>${c.client.patron}</td>
+				<td>${c.tour.organizer}</td>
+				<td>${c.tour.date}</td>
+				<td>${c.tour.type}</td>
+				<td>${c.tour.cost}</td>
+				<td>${c.tour.route.country}</td>
+				<td>${c.tour.route.route}</td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -54,6 +69,5 @@
 		<button type="submit" style="width: 300px;">Back to menu</button>
 		</form:form>
 	</div>
-	
 </body>
 </html>

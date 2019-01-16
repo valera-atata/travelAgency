@@ -90,6 +90,11 @@ public class UserController {
     	}
         return "menu";
     }
+    
+    @RequestMapping(value = {"/admin_menu"}, method = RequestMethod.GET)
+    public String adminMenu(Model model) {
+    	return "admin_menu";
+    }
 /////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "/create_contract", method = RequestMethod.POST)
     public String createContract(Model model) {
@@ -200,23 +205,156 @@ public class UserController {
     }
     /////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "all_routes", method = RequestMethod.POST)
-		public String allRoutes(Model model) {
+	@RequestMapping(value = "/all_routes", method = RequestMethod.POST)
+	public String allRoutes(Model model) {
 		System.out.println("all_routes");
 		List<RouteEntity> routes = routeService.getAll();
+		System.out.println(routes.size());
 		model.addAttribute("routes", routes);
 		return "all_routes";
 	}
-	  
-	@RequestMapping(value = "all_tours", method = RequestMethod.POST)
+///////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/all_tours", method = RequestMethod.POST)
 	public String allTours(Model model) {
 		System.out.println("all_tours");
 		List<TourEntity> tours = tourService.getAll();
 		model.addAttribute("tours", tours);
 		return "all_tours";
 	}
+///////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
     
+	@RequestMapping(value = "/admin_all_routes", method = RequestMethod.POST)
+		public String allAdminRoutes(Model model) {
+		System.out.println("all_routes");
+		List<RouteEntity> routes = routeService.getAll();
+		System.out.println(routes.size());
+		model.addAttribute("routes", routes);
+		return "admin_all_routes";
+	}
+    
+    @RequestMapping(value = "/edit_route", method = RequestMethod.POST)
+    public String editRoute(@RequestParam("routeId") Long routeId, Model model) {
+    	System.out.println("edit_route " + routeId);
+    	model.addAttribute("routeForm", routeService.getById(routeId));
+    	return "route_form";
+    }
+    
+    @RequestMapping(value = "/edit_route", params = "submit_route", method = RequestMethod.POST)
+    public String SubmitEditRoute(@ModelAttribute("routeForm") RouteEntity routeForm, Model model) {
+    	System.out.println("submit_route");
+    	System.out.println(routeForm.getRoute());
+
+    	return "forward:/admin_all_routes";
+    }
+    
+    @RequestMapping(value = "/delete_route", method = RequestMethod.POST)
+    public String deleteRoute(@RequestParam("routeId") Long routeId, Model model) {
+    	System.out.println("delete_route " + routeId);
+    	return "forward:/admin_all_routes";
+    }
+    
+    @RequestMapping(value = "/add_route", method = RequestMethod.POST)
+    public String addRoute(Model model) {
+    	System.out.println("add_route");
+    	model.addAttribute("routeForm", new RouteEntity());
+    	return "route_form";
+    }
+    
+    @RequestMapping(value = "/add_route", params = "submit_route", method = RequestMethod.POST)
+    public String SubmitAddRoute(@ModelAttribute("routeForm") RouteEntity routeForm, Model model) {
+    	System.out.println("submit_client");
+    	System.out.println(routeForm.getRoute());
+    	return "forward:/admin_all_routes";
+    }
+    
+    /////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+	  
+    @RequestMapping(value = "/admin_all_tours", method = RequestMethod.POST)
+	public String allAdminTours(Model model) {
+	System.out.println("admin_all_tours");
+	List<TourEntity> tours = tourService.getAll();
+	model.addAttribute("tours", tours);
+	return "admin_all_tours";
+}
+
+	@RequestMapping(value = "/edit_tour", method = RequestMethod.POST)
+	public String editTour(@RequestParam("tourId") Long tourId, Model model) {
+		System.out.println("edit_tour " + tourId);
+		model.addAttribute("routes", routeService.getAll());
+		model.addAttribute("tourForm", tourService.getById(tourId));
+		return "tour_form";
+	}
+	
+	@RequestMapping(value = "/edit_tour", params = "submit_tour", method = RequestMethod.POST)
+	public String SubmitEditTour(@ModelAttribute("tourForm") TourEntity tourForm, Model model) {
+		System.out.println("submit_tour");
+		System.out.println(tourForm.getOrganizer());
+	
+		return "forward:/admin_all_tours";
+	}
+	
+	@RequestMapping(value = "/delete_tour", method = RequestMethod.POST)
+	public String deleteTour(@RequestParam("tourId") Long tourId, Model model) {
+		System.out.println("delete_tour " + tourId);
+		return "forward:/admin_all_tours";
+	}
+	
+	@RequestMapping(value = "/add_tour", method = RequestMethod.POST)
+	public String addTour(Model model) {
+		System.out.println("add_tour");
+		model.addAttribute("routes", routeService.getAll());
+		model.addAttribute("tourForm", new TourEntity());
+		return "tour_form";
+	}
+	
+	@RequestMapping(value = "/add_tour", params = "submit_tour", method = RequestMethod.POST)
+	public String SubmitAddTour(@ModelAttribute("tourForm") TourEntity tourForm, Model model) {
+		System.out.println("submit_tour");
+		tourForm.setRoute(routeService.getById(tourForm.getRoute().getRouteId()));
+		System.out.println(tourForm.getRoute());
+		return "forward:/admin_all_tours";
+	}
+
+/////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+
+	@RequestMapping(value = {"/sum_of_contracts"}, method = RequestMethod.POST)
+	public String sumOfContracts(Model model) {
+	  	System.out.println("sum_of_contracts");
+	  	List<Object[]> sumOfContracts = tourService.getSumOfContracts();
+	  	model.addAttribute("sumOfContracts", sumOfContracts);
+	  	return "admin_sum_of_contracts";
+  	}
+/////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+	
+  @RequestMapping(value = "/all_contracts", method = RequestMethod.POST)
+  public String allContracts(Model model) {
+  	System.out.println("admin_all_contracts");
+  	List<ContractEntity> contracts = contractService.getAll();
+  	model.addAttribute("contracts", contracts);
+	return "admin_all_contracts";
+  }
+
+/////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+  
+  @RequestMapping(value = "/all_clients", method = RequestMethod.POST)
+  public String allClients(Model model) {
+  	System.out.println("all_clients");
+  	List<ClientEntity> clients = clientService.getAll();
+  	model.addAttribute("clients", clients);
+  	return "admin_all_clients";
+  }
+  
+/////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+  
+	@RequestMapping(value = "/statistics_of_agents", method = RequestMethod.POST)
+	public String statisticsOfAgents(Model model) {
+		System.out.println("admin_statistics");
+		List<Object[]> agents = agentService.getStatistics();
+		model.addAttribute("agents", agents);
+		return "admin_statistics";
+	}
+
+	
 //    @RequestMapping(value = {"/", "/menu", "/admin_menu"}, params = "my_clients", method = RequestMethod.POST)
 //    public String myClients(Model model) {
 //    	System.out.println("my_clients");
@@ -243,7 +381,7 @@ public class UserController {
 //    
 //    @RequestMapping(value = "/edit_client", method = RequestMethod.POST)
 //    public String saveOrUpdateClient(@ModelAttribute("clientForm") ClientEntity clientForm, BindingResult bindingResult, Model model) {
-//       	System.out.println(clientForm.getClientId());
+//      System.out.println(clientForm.getClientId());
 //    	System.out.println(clientForm.getSurname());
 //    	System.out.println(clientForm.getName());
 //    	System.out.println(clientForm.getPatron());
@@ -287,10 +425,7 @@ public class UserController {
 //    
 
 //    
-//    @RequestMapping(value = {"/admin_menu"}, method = RequestMethod.GET)
-//    public String adminMenu(Model model) {
-//    	return "admin_menu";
-//    }
+
 //    
 //    
 //    @RequestMapping(value = {"/admin_menu"}, params = "sum_of_contracts", method = RequestMethod.POST)

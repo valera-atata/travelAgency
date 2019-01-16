@@ -23,13 +23,15 @@ public class AgentHibernateDao extends AbstractAgentHibernateDao {
 	
 	@Override
 	public List<Object[]> getStatistics(){
-		String sql = "select C.agent_id, "
+		String sql = "select C.agent_id, A.surname, A.name, A.patron, "
 				+ "(select count(D.client_id) "
 				+ "from (SELECT DISTINCT contracts.client_id, contracts.agent_id FROM contracts) AS D "
 				+ "WHERE C.agent_id = D.agent_id), "
 				+ "count(C.agent_id), "
 				+ "sum((select T.cost from tours as T where T.tour_id = C.tour_id)) "
-				+ "from contracts as C group by C.agent_id";
+				+ "from contracts as C, agents as A "
+				+ "where C.agent_id = A.agent_id "
+				+ "group by C.agent_id";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		return query.list();
 	}
