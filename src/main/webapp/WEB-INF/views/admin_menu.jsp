@@ -16,47 +16,47 @@
 	
 	<table>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/create_contract">
+				<form:form method="GET" action="${contextPath}/user/create_contract">
 					<button type="submit" style="width: 300px;">Create contract</button>
 				</form:form>
 			</td></tr>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/my_contracts">
+				<form:form method="GET" action="${contextPath}/user/my_contracts">
 					<button type="submit" style="width: 300px;">My contracts</button>
 				</form:form>
 			</td></tr>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/my_clients">
+				<form:form method="GET" action="${contextPath}/user/my_clients">
 					<button type="submit" style="width: 300px;">My clients</button>
 				</form:form>
 			</td></tr>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/admin_all_routes">
+				<form:form method="GET" action="${contextPath}/admin/admin_all_routes">
 					<button type="submit" style="width: 300px;">All routes</button>
 				</form:form>
 			</td></tr>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/admin_all_tours">
+				<form:form method="GET" action="${contextPath}/admin/admin_all_tours">
 					<button type="submit" style="width: 300px;">All tours</button>
 				</form:form>
 			</td></tr>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/all_contracts">
+				<form:form method="GET" action="${contextPath}/admin/all_contracts">
 					<button type="submit" style="width: 300px;">All contracts</button>
 				</form:form>
 			</td></tr>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/all_clients">
+				<form:form method="GET" action="${contextPath}/admin/all_clients">
 					<button type="submit" style="width: 300px;">All clients</button>
 				</form:form>
 			</td></tr>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/sum_of_contracts">
+				<form:form method="GET" action="${contextPath}/admin/sum_of_contracts">
 					<button type="submit" style="width: 300px;">Sum of contracts</button>
 				</form:form>
 			</td></tr>
 			<tr><td>
-				<form:form method="POST" action="${contextPath}/statistics_of_agents">
+				<form:form method="GET" action="${contextPath}/admin/statistics_of_agents">
 					<button type="submit" style="width: 300px;">Statistics of agents</button>
 				</form:form>
 			</td></tr>

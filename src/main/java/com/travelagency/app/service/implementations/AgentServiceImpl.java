@@ -27,19 +27,29 @@ public class AgentServiceImpl implements AgentService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void add(AgentEntity agentEntity) {
-        agentEntity.setPassword(bCryptPasswordEncoder.encode(agentEntity.getPassword()));
+    public void add(AgentEntity agent) {
+    	agent.setPassword(bCryptPasswordEncoder.encode(agent.getPassword()));
         Set<RoleEntity> roleEntities = new HashSet<RoleEntity>();
-        if(agentEntity.getLogin().equals("petrenko")) {
+        if(agent.getLogin().equals("petrenko")) {
         	 roleEntities.add(roleDao.getById(2L));
         } else {
         	 roleEntities.add(roleDao.getById(1L));
         }
-        agentEntity.setRoles(roleEntities);
-        agentDao.add(agentEntity);
+        agent.setRoles(roleEntities);
+        agentDao.add(agent);
     }
-
+    
     @Override
+	public void update(AgentEntity agent) {
+		agentDao.update(agent);		
+	}
+
+	@Override
+	public void delete(AgentEntity agent) {
+		agentDao.delete(agent);
+	}
+
+	@Override
     public AgentEntity getByLogin(String login) {
         return agentDao.getByLogin(login);
     }

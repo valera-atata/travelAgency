@@ -27,7 +27,7 @@
 <body>
 	<h1 align="center">List of tours</h1>
 	<div class="wrapper">
-    	<form:form method="POST" action="${contextPath}/add_tour">
+    	<form:form method="GET" action="${contextPath}/admin/add_tour">
 			<button type="submit" style="width: 300px;">Add tour</button>
 		</form:form>
 	</div>
@@ -47,11 +47,11 @@
 		</tr>
 		<c:forEach items="${tours}" var="t">
 		
-			<c:url var="updateLink" value="/edit_tour">
+			<c:url var="updateLink" value="/admin/edit_tour">
 				<c:param name="tourId" value="${t.tourId}" />
 			</c:url>
 
-			<c:url var="deleteLink" value="/delete_tour">
+			<c:url var="deleteLink" value="/admin/delete_tour">
 				<c:param name="tourId" value="${t.tourId}" />
 			</c:url>
 			<tr>

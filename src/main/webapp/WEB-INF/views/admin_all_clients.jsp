@@ -26,12 +26,6 @@
 </head>
 <body>
 	<h1 align="center">List of clients</h1>
-	<div class="wrapper">
-    	<form:form method="POST" action="${contextPath}/add_client">
-			<button type="submit" style="width: 300px;">Add client</button>
-		</form:form>
-	</div>
-		
 	<hr />
 
 	<table border="1">

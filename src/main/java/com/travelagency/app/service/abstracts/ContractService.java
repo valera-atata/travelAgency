@@ -8,6 +8,10 @@ public interface ContractService {
 
 	void add(ContractEntity contract);
 
+	void update(ContractEntity contract);
+	
+	void delete(ContractEntity contract);
+
 	List<ContractEntity> getAllByAgent(String login);
 	
 	List<ContractEntity> getAll();

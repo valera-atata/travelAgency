@@ -25,6 +25,16 @@ public class ClientServiceImpl implements ClientService{
 	}
 	
 	@Override
+	public void update(ClientEntity client) {
+		clientDao.update(client);
+	}
+
+	@Override
+	public void delete(ClientEntity client) {
+		clientDao.delete(client);
+	}
+
+	@Override
 	public List<ClientEntity> getAllByAgent(String login) {
 		return clientDao.getAllByAgent(login);
 	}

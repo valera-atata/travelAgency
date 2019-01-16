@@ -17,8 +17,18 @@ public abstract class AbstractAgentHibernateDao {
 	protected SessionFactory sessionFactory;
 	
 //	@Override
-	public void add(AgentEntity agentEntity) {
-		sessionFactory.getCurrentSession().save(agentEntity);
+	public void add(AgentEntity agent) {
+		sessionFactory.getCurrentSession().save(agent);
+	}
+	
+//	@Override
+	public void update(AgentEntity agent) {
+		sessionFactory.getCurrentSession().update(agent);
+	}
+	
+//	@Override
+	public void delete(AgentEntity agent) {
+		sessionFactory.getCurrentSession().delete(agent);
 	}
     
 //	@Override

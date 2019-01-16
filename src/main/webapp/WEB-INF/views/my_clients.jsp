@@ -27,7 +27,7 @@
 <body>
 	<h1 align="center">List of clients</h1>
 	<div class="wrapper">
-    	<form:form method="POST" action="${contextPath}/add_client">
+    	<form:form method="GET" action="${contextPath}/user/add_client">
 			<button type="submit" style="width: 300px;">Add client</button>
 		</form:form>
 	</div>
@@ -47,11 +47,11 @@
 		</tr>
 		<c:forEach items="${myClients}" var="c">
 		
-			<c:url var="updateLink" value="/edit_client">
+			<c:url var="updateLink" value="/user/edit_client">
 				<c:param name="clientId" value="${c.clientId}" />
 			</c:url>
 
-			<c:url var="deleteLink" value="/delete_client">
+			<c:url var="deleteLink" value="/user/delete_client">
 				<c:param name="clientId" value="${c.clientId}" />
 			</c:url>
 			<tr>

@@ -6,7 +6,11 @@ import com.travelagency.app.entity.AgentEntity;
 
 
 public interface AgentService {
-    void add(AgentEntity agentEntity);
+    void add(AgentEntity agent);
+    
+    void update(AgentEntity agent);
+    
+    void delete(AgentEntity agent);
 
     AgentEntity getByLogin(String login);
     

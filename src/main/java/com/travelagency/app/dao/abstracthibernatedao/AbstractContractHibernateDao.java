@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.travelagency.app.dao.BaseDao;
-import com.travelagency.app.entity.ClientEntity;
 import com.travelagency.app.entity.ContractEntity;
 
 @Transactional
@@ -20,6 +19,16 @@ public abstract class AbstractContractHibernateDao {
 //	@Override
 	public void add(ContractEntity contract) {
 		sessionFactory.getCurrentSession().save(contract);
+	}
+	
+//	@Override
+	public void update(ContractEntity contract) {
+		sessionFactory.getCurrentSession().update(contract);
+	}
+	
+//	@Override
+	public void delete(ContractEntity contract) {
+		sessionFactory.getCurrentSession().delete(contract);
 	}
 	
 //	@Override

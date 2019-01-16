@@ -21,6 +21,16 @@ public class ContractServiceImpl implements ContractService {
 	}
 	
 	@Override
+	public void update(ContractEntity contract) {
+		contractDao.update(contract);
+	}
+
+	@Override
+	public void delete(ContractEntity contract) {
+		contractDao.delete(contract);
+	}
+
+	@Override
 	public List<ContractEntity> getAllByAgent(String login){
 		return contractDao.getAllByAgent(login);
 	}

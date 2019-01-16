@@ -21,6 +21,16 @@ public class RouteServiceImpl implements RouteService {
 	}
 	
 	@Override
+	public void update(RouteEntity route) {
+		routeDao.update(route);
+	}
+
+	@Override
+	public void delete(RouteEntity route) {
+		routeDao.delete(route);
+	}
+
+	@Override
 	public List<RouteEntity> getAll(){
 		return routeDao.getAll();
 	}

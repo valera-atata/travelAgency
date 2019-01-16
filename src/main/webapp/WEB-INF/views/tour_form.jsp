@@ -18,6 +18,15 @@ div {
  	width:300px;   
 }
 </style>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+</script>
+
 
 <body>
 
@@ -39,6 +48,12 @@ div {
 				<td><form:input style="width: 296px;" type="text" path="cost" placeholder="cost"/></td>
 			</tr>
 			<tr>
+				<td><label>Date</label></td>
+				<td>
+					<form><input style="width: 296px;" name="dateString" type="text" placeholder="date" id="datepicker"/></form>
+				</td>
+			</tr>
+			<tr>
 			<td><form:label path="route.routeId">Route</form:label></td>
 				<td>
 					<form:select path="route.routeId" id="drop">    
@@ -54,7 +69,14 @@ div {
 			</tr>
 		</table>
 	</form:form>
-
+<script>
+function selectDate() {
+	
+  dropdownValue = document.getElementsByName("s1")[0].value;
+  document.getElementsByName("o1")[0].value = dropdownValue;
+}
+</script>
+	
 </div>
 </body>
 </html>

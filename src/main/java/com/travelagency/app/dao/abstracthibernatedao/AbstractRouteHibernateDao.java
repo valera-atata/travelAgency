@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.travelagency.app.dao.BaseDao;
+import com.travelagency.app.entity.ContractEntity;
 import com.travelagency.app.entity.RouteEntity;
 
 @Transactional
@@ -21,6 +22,16 @@ public abstract class AbstractRouteHibernateDao {
 		sessionFactory.getCurrentSession().save(route);
 	}
 
+//	@Override
+	public void update(RouteEntity route) {
+		sessionFactory.getCurrentSession().update(route);
+	}
+	
+//	@Override
+	public void delete(RouteEntity route) {
+		sessionFactory.getCurrentSession().delete(route);
+	}
+	
 //	@Override
 	public List<RouteEntity> getAll() {
 		return sessionFactory.getCurrentSession().createQuery("from RouteEntity").list();

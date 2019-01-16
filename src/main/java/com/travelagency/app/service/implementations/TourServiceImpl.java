@@ -22,6 +22,16 @@ public class TourServiceImpl implements TourService {
 	}
 	
 	@Override
+	public void update(TourEntity tour) {
+		tourDao.update(tour);
+	}
+
+	@Override
+	public void delete(TourEntity tour) {
+		tourDao.delete(tour);
+	}
+
+	@Override
 	public List<TourEntity> getAll(){
 		return tourDao.getAll();
 	}

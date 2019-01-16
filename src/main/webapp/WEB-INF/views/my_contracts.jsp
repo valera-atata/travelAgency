@@ -48,11 +48,11 @@
 		</tr>
 		<c:forEach items="${myContracts}" var="c">
 		
-			<c:url var="updateLink" value="/edit_contract">
+			<c:url var="updateLink" value="/user/edit_contract">
 				<c:param name="contractId" value="${c.contractId}" />
 			</c:url>
 
-			<c:url var="deleteLink" value="/delete_contract">
+			<c:url var="deleteLink" value="/user/delete_contract">
 				<c:param name="contractId" value="${c.contractId}" />
 			</c:url>
 			<tr>

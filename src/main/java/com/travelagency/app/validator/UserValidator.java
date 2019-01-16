@@ -24,21 +24,19 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
     	AgentEntity user = (AgentEntity) o;
-
+    	
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "Required");
-        if (user.getLogin().length() < 8 || user.getLogin().length() > 32) {
+        if (user.getLogin().length() < 6 || user.getLogin().length() > 32) {
             errors.rejectValue("login", "Size.agentForm.login");
         }
-
+        
         if (agentService.getByLogin(user.getLogin()) != null) {
             errors.rejectValue("login", "Duplicate.agentForm.login");
         }
-
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
-        if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
+        if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
             errors.rejectValue("password", "Size.agentForm.password");
         }
-
         if (!user.getConfirmPassword().equals(user.getPassword())) {
             errors.rejectValue("confirmPassword", "Different.agentForm.password");
         }

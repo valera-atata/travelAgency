@@ -27,7 +27,7 @@
 <body>
 	<h1 align="center">List of routes</h1>
 	<div class="wrapper">
-    	<form:form method="POST" action="${contextPath}/add_route">
+    	<form:form method="GET" action="${contextPath}/admin/add_route">
 			<button type="submit" style="width: 300px;">Add route</button>
 		</form:form>
 	</div>
@@ -43,11 +43,11 @@
 		</tr>
 		<c:forEach items="${routes}" var="r">
 		
-			<c:url var="updateLink" value="/edit_route">
+			<c:url var="updateLink" value="/admin/edit_route">
 				<c:param name="routeId" value="${r.routeId}" />
 			</c:url>
 
-			<c:url var="deleteLink" value="/delete_route">
+			<c:url var="deleteLink" value="/admin/delete_route">
 				<c:param name="routeId" value="${r.routeId}" />
 			</c:url>
 			<tr>

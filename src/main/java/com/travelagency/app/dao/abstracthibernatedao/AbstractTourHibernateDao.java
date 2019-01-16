@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.travelagency.app.dao.BaseDao;
+import com.travelagency.app.entity.RouteEntity;
 import com.travelagency.app.entity.TourEntity;
 
 @Transactional
@@ -19,6 +20,16 @@ public abstract class AbstractTourHibernateDao {
 //	@Override
 	public void add(TourEntity tour) {
 		sessionFactory.getCurrentSession().save(tour);
+	}
+	
+//	@Override
+	public void update(TourEntity tour) {
+		sessionFactory.getCurrentSession().update(tour);
+	}
+	
+//	@Override
+	public void delete(TourEntity tour) {
+		sessionFactory.getCurrentSession().delete(tour);
 	}
 
 //	@Override

@@ -8,8 +8,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.travelagency.app.dao.BaseDao;
+import com.travelagency.app.entity.AgentEntity;
 import com.travelagency.app.entity.ClientEntity;
-import com.travelagency.app.entity.RoleEntity;
 
 @Transactional
 public abstract class AbstractClientHibernateDao {
@@ -20,6 +20,16 @@ public abstract class AbstractClientHibernateDao {
 //	@Override
 	public void add(ClientEntity client) {
 		sessionFactory.getCurrentSession().save(client);
+	}
+	
+//	@Override
+	public void update(ClientEntity client) {
+		sessionFactory.getCurrentSession().update(client);
+	}
+	
+//	@Override
+	public void delete(ClientEntity client) {
+		sessionFactory.getCurrentSession().delete(client);
 	}
 	
 //	@Override
